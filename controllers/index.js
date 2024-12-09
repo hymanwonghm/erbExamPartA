@@ -18,6 +18,7 @@ const addItemController = async(req, res) => {
             res.status(200).render('index', {data: shoppingCart})
         }
     } catch (error) {
+        // ERROR may occur when user add item with the same name as the name colummn is set to be unique in knex
         res.status(500).json({error: "Shooping Cart Sever Error"})
     }
 }

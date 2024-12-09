@@ -5,7 +5,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable('shopping_cart', (table) => {
     table.increments('id').primary().notNullable()
-    table.text('name', 128).notNullable()
+    table.text('name', 128).notNullable().unique()
     table.integer('quantity').notNullable()
   })
 };
