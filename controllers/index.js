@@ -46,10 +46,13 @@ const decreseQuantityController = async(req, res) => {
         console.log(product)
         const originalQuantity = await knex('shopping_cart').where({name: product}).select('quantity')
         console.log(Number(originalQuantity[0].quantity))
-        const updated = await knex('shopping_cart').where({name: product}).update({quantity: Number(originalQuantity[0].quantity) - 1})
-        if (updated.rowCount !== 0 ){
-            const shoppingCart = await knex('shopping_cart').select('*').orderBy('id')
-            res.status(200).render('index', {data: shoppingCart})
+        // User cannot decrease if the orignalQuantity is 0 
+        if (Number(originalQuantity[0].quantity) !== 0 ) {
+            const updated = await knex('shopping_cart').where({name: product}).update({quantity: Number(originalQuantity[0].quantity) - 1})
+            if (updated.rowCount !== 0 ){
+                const shoppingCart = await knex('shopping_cart').select('*').orderBy('id')
+                res.status(200).render('index', {data: shoppingCart})
+            }
         }
     } catch (error) {
         res.status(500).json({error: "Shooping Cart Sever Error"})
