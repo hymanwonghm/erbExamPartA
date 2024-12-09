@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>shopping cart</title>
+</head>
+<body>
+    <h1>Shooping Cart</h1>
+    <table>
+        <tr>
+            <th>items</th>
+            <th>decrese</th>
+            <th>quantity</th>
+            <th>increase</th>
+        </tr>
+        <% data.forEach((element) => { %>
+        <tr>
+            <td><%= element.name %></td>
+            <td>
+                <form action="/decrease" method="POST">
+                    <input type="text"style="display: none" value="<%= element.name %>" name="name">
+                    <button type = "submit">-</button>
+                </form>
+            </td>
+            <td><%= element.quantity %></td>
+            <td>
+                <form action="/increase" method="POST">
+                    <input type="text"style="display: none" value="<%= element.name %>" name="name">
+                    <button type = "submit">+</button>
+                </form>
+            </td>
+        </tr>
+
+        <% }) %>
+    
+    </table>
+    
+    <br>
+    Add new item to the shopping cart
+    <form action="/add" method="POST">
+        <input type="text" name="name">
+        <button type="submit">Add</button>
+    </form>
+
+    <br>
+    Submit the whole shopping cart to http://localhost:3000/cart
+    <form action="/cart" method="POST">
+        <input type="text" style="display: none" name="name">
+        <button type="submit">Submit shopping cart</button>
+    </form>
+</body>
+</html>
